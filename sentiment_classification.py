@@ -147,7 +147,6 @@ print ("accuracy of My_MultinomialMB with log:",accuracy(twenty_test.target, my_
 ###Tune alpha: choose different laplacian smoothing parameter ***alpha***, including (0, 0.001, 0.01, 0.1, 1, 10, 100, 1000), show the accuracy of your model using ***pred_log_proba***. Plot the accuracy curve with different ***alpha*** using *matplotlib* package. 
     
 # for different alpha, print the accuracy of your model
-
 accs = []
 alpha_list = [0, 0.001, 0.1, 1, 10, 100, 1000, 10000]
 for alpha in alpha_list:
