@@ -203,10 +203,3 @@ my_syn_y_pred = my_KMeans(syn_X, n_clusters=4, max_iter = 100)
 
 plt.scatter(syn_X[:,0], syn_X[:,1], c=my_syn_y_pred, s=10, cmap=plt.cm.Paired)
 plt.show()
-
-
-EM & GMM: https://www.ee.bgu.ac.il/~haimp/ml/lectures/lec2/lec2.pdf
-https://www.informit.com/articles/article.aspx?p=363730&seqNum=2
-
-Study group: Lucius Wang, Jessica Bojorquez, thank you Yewen for your help!
-"""
