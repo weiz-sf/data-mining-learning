@@ -3,7 +3,6 @@
 ### Implement EM for 2-d GMM: implement EM algorithm for 3-components 2d GMM on a synthetic dataset.
 
 # import neccessary libraries
-
 import numpy as np
 import matplotlib.pyplot as plt 
 from scipy.stats import multivariate_normal
