@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-## probabilistic Latent Semantic Analysis （70 pts)
+## probabilistic Latent Semantic Analysis 
 
 from google.colab import drive
 
@@ -151,32 +151,3 @@ for i in plsa.beta:
     for idx in (-i).argsort()[:5]:
         topic_word += [id2word[idx]]
     print(topic_word)
-
-"""### Part 2: pLSA Initialization (25 pts = 10 + 15)
-
-Please answer the following two questions about pLSA initialization:
-
-1. Let K denote the number of topics, N denote the total number of words in the dictionary. Is it a good initialization to set θd’s and βk’s as uniform distribution, i.e., θdk = 1/K for every d and k, and  βkw = 1/N for every k and w, where N is the total number of words in the dictionary? Why (please give some formulas to illustrate your conclusion)? 
-
-2. Can you give an example of bad initialization? (if the initialization in question 1 is a bad initialization, you **CANNOT** use it as answer for question 2) Why this is a bad initialization (please give some formulas to illustrate your conclusion)?
-
-#### Write Your answer here:
-
-https://drive.google.com/file/d/1V7D60ZxYxhuFrOty7d3Df4BEukeVYrnN/view?usp=sharing
-
-# Citation
-
-PLSA:
-
-https://github.com/laserwave 
-https://www.datacamp.com/community/tutorials/discovering-hidden-topics-python
-https://towardsdatascience.com/topic-modelling-with-plsa-728b92043f41
-http://zhikaizhang.cn/2016/06/17/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B9%8BPLSA/
-
-
-Collaboration & help: Study group: Jessica Bojorquez, John Fritsche Lucius Wang, Office Hour content (Thank you Yewen! ) 
-
-
-Initialization: 
-https://towardsdatascience.com/random-initialization-for-neural-networks-a-thing-of-the-past-bfcdd806bf9e
-"""
