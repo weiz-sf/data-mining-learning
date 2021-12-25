@@ -1,24 +1,13 @@
 # -*- coding: utf-8 -*-
 
-## Problem 1: Skip-Gram (50 pts = 40 + 10)
+## skip-gram model with negative sampling in Pytorch, apply it on the 20-newsgroup dataset, and compare your SkipGram implementation with the gensim implementation by looking at top-10 most similar words with "pittsburgh". Please note that, your SkipGram and gensim skipgram don't have to have exactly same results.
 
-In this problem, you are goint to implement skip-gram model with negative sampling in Pytorch, apply it on the 20-newsgroup dataset, and compare your SkipGram implementation with the gensim implementation by looking at top-10 most similar words with "pittsburgh". Please note that, your SkipGram and gensim skipgram don't have to have exactly same results.
 
-Hint:
-* Running time would be long, please start early and be patient. You can reduce the number of iteration **itr_num** to 1 when you are debugging, but make sure to use **itr_num=20** to report your results.
-* You may find this tutorial for the gensim library helpful if you want to get familiar with gensim: https://radimrehurek.com/gensim/auto_examples/index.html#core-tutorials-new-users-start-here
-
-Suggestions:
-* Please think about which parameters you need to define.
-* Please make sure you know what shape each operation expects. Use .view() if you need to
+#Suggestions:
+#Please think about which parameters you need to define.
+#Please make sure you know what shape each operation expects. Use .view() if you need to
   reshape.
   
-Possible ERROR message for the code skeleton (The code skeleton is bug-free, this ERROR message is only caused by setting issues):
-* You may get error message: **ValueError: unable to read local cache '/Users/emilywang/gensim-data/information.json' during fallback, connect to the Internet and retry**. Here, "Users/emilywang/" should be your own path for gesim-data.
-* This indicates the gensim-data folder on your device does not include the information.json file.
-* To solve this problem, you should put the provided information.json file (in our homework zip file) under the indicated path.
-* For MAC users, you may see this error afterwards: **<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:777)>.** You can follow: https://timonweb.com/python/fixing-certificate_verify_failed-error-when-trying-requests-html-out-on-mac/ to solve this problem.
-"""
 
 # import libraries
 import torch
@@ -93,12 +82,6 @@ class SkipGram(nn.Module):
     def forward(self, idx):
         return self.u_emb(idx)
     def loss(self, pos_data, neg_data):
-        '''
-            TODO: 
-                Fill in this blank: Train the word embedding based on Skip-gram algorithm
-        '''
-#TODO   
-
         pos_target = []
         pos_context = []
         for context, target in pos_data:
@@ -122,7 +105,6 @@ class SkipGram(nn.Module):
 
         loss = positive_val + neg_val
         return -loss.mean()/batch_size
-#TODO
 
 # apply the SkipGram model to the 20-newsgroup dataset
 
@@ -145,13 +127,9 @@ for i in range(itr_num):
         #print("iteration: ",i, ", batch: ", bid) # there are around 2000 batches per iteration, you may want to print the batch number to check the curret progress
         optimizer.zero_grad()
         positive_data = data[bid * batch_size : (bid + 1) * batch_size]
-        '''
-            TODO: 
-                Conduct negative sample for negative words, based on word frequency
-        '''
-        #TODO
+        
         neg_data =  np.random.choice(word_ID,size = (4*batch_size, neg_sample_count), p=list(word_prob.values()))
-        #TODO 
+
         loss = skipgram.loss(positive_data, neg_data)
         loss.backward()
         s += loss
@@ -162,40 +140,15 @@ for i in range(itr_num):
 
 # Compare the results with standard gensim implementation
 
-
 from gensim.models import Word2Vec
 # model = Word2Vec(sent_wds, min_count=1, window=2, size = 100, workers = 4)
 model = Word2Vec(sent_wds)
 print(model.wv.most_similar('pittsburgh'))
 
-"""## Problem 2: PageRank (50 pts)
 
-In this problem, you are going to do some proofs for the PageRank algorithm, then implement it and apply the implemented model on a citation dataset. Finally, you are going to extend it to personalized PageRank.
+"""## Do some proofs for the PageRank algorithm, then implement it and apply the implemented model on a citation dataset. Finally, you are going to extend it to personalized PageRank.
 
 Please download the citation dataset from https://aminer.org/dblp_citation (Version 1). In the page, you will be able to see a very detailed README regarding the organization of the dataset.
-
-### Part 1: PageRank Score Without Teleport (10pts)
-
-Prove that, for a connected undirected graph, where the adjacency matrix $A = A^T$ , the PageRank score (without teleport) for node i is proportional to its degree $d_i$, i.e., $r_i = d_i/2|E|$, where |E| is the total number of edges in the graph.
-
-#### Write Your answer here:
-
-[Your Answer] https://drive.google.com/file/d/1fh1Q3fV3aqmcAs8mFhtg6KI_44rStOt9/view?usp=sharing
-
-### Part 2: PageRank Score With Teleport (10pts)
-
-Prove that, the closed form solution to PageRank with teleport is: 
-
-$r = (1 − \beta)(I − \beta M)^{-1}  \mathbb{1}/N$
-
-
-where 1 − β is the teleport probability, $M = (D^{-1}A)^T$ , $\mathbb{1}$ is the all one vector with dimentionality N, and N is the total number of nodes in the graph.
-
-#### Write Your answer here:
-
-[Your Answer]  https://drive.google.com/file/d/1fh1Q3fV3aqmcAs8mFhtg6KI_44rStOt9/view?usp=sharing
-
-### Part 3: Implement PageRank With Teleport (10 pts)
 
 Implement PageRank with teleport on Conference citation network. Show the top 50 conferences according to their PageRank scores.
 """
@@ -216,7 +169,7 @@ def preprocessing():
 #     extract useful information, 
 #     return the parsed entities.
 
-    with open('/gdrive/MyDrive/Colab Notebooks/CS247/hw5/DBLPOnlyCitationOct19.txt') as file:
+    with open('/gdrive/MyDrive/DBLPOnlyCitationOct19.txt') as file:
         id_pub, id_cite = {}, {}
         _cite_temp = []
         pub_list = {}
@@ -277,11 +230,6 @@ def normalize(matrix):
     return mx
 
 def pagerank(adj, beta):
-    """
-        TO DO: 
-            compute pagerank scores and return them in numpy array form
-    """
-    #TODO
     n, _ = adj.shape
     r = np.asarray(adj.sum(axis=1)).reshape(-1)
     k = r.nonzero()[0]
@@ -293,7 +241,6 @@ def pagerank(adj, beta):
 
     ranks = ranks/ranks.sum()
     return ranks
-    #TODO
 
 # Apply your pagerank to the citation network
 
@@ -312,23 +259,15 @@ for i in ind[-50:]:
     print (rank, ': ', pub_name[i])
     rank = rank + 1
 
-"""### Part 4: Personalized-PageRank (20 pts = 5 + 15)
-
+"""###Personalized-PageRank
 For Personalized-PageRank, it is natural to extend queries from single node to a set of nodes. 
 
 1. Please write down the iterative formula for computing P-PageRank when the query is a set of nodes, and explain why it is designed in the proposed way.
 2. Please implement the Personalized-PageRank, and show the top-10 most similar conferences to {KDD}, {ICML}, and {KDD, ICML} on the conference citation network.
 
-#### Write Your answer here:
-
-[Your Answer]  https://drive.google.com/file/d/1fh1Q3fV3aqmcAs8mFhtg6KI_44rStOt9/view?usp=sharing
 """
 
 def person_pagerank(adj, beta, target_set):
-    """
-    To DO:
-        compute personalized-pagerank scores and return them in numpy array form
-    """
     n, _ = adj.shape
     r = np.asarray(adj.sum(axis=1)).reshape(-1)
     k = r.nonzero()[0]
